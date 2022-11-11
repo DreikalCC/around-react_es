@@ -1,10 +1,12 @@
 export function PopupWithForm(props) {
+const isOpen = props.isPopupOpen;
+const onClose = props.onClose;
   return (
-    <section id={`${props.name}`} className={`popup ${props.name}`}>
+    <section id={`${props.name}`} className={isOpen ? 'popup edit popup_active' : 'popup edit'} >
       <form novalidate name={`${props.name}`} className="edit__form">
         <h3 className="edit__title">{`${props.title}`}</h3>
           <fieldset className="input">
-            <label className="input__field">
+            <label style={{ display: `${props.display}`}} className="input__field">
               <input  id={`${props.name}-name-input`}
               name="name"
               required
@@ -28,7 +30,7 @@ export function PopupWithForm(props) {
             </label>
           </fieldset>
           <button type="submit" className="edit__submit-btn">{`${props.button}`}</button>
-          <a id={`${props.name}__close`} className="popup__close"></a>
+          <a id={`${props.name}`} onClick={onClose} className="popup__close"></a>
       </form>
       <div id={`${props.name}__overlay`} className="popup__overlay"></div>
     </section>
