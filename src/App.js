@@ -6,11 +6,10 @@ import { Main } from './components/Main';
 
 function App() {
   const [open, setOpen] = React.useState({avatar:false, profile: false, gallery:false, image:false})
-  const [selectedCard, setSelectedCard] = React.useState();
+  const [selectedCard, setSelectedCard] = React.useState({});
 
-  function handleCardClick(evt){
-    console.log(evt.target)
-    setSelectedCard([evt.target._id])
+  function handleCardClick(item){
+    setSelectedCard(item)
     setOpen({...open, image: true});
   }
 
@@ -35,7 +34,7 @@ function App() {
       <Header />
 
       <Main isOpen={open} handleClose={closeAllPopups}
-      imagePopup={selectedCard}
+      selectedCard={selectedCard}
       handleCardClick={handleCardClick}
       handleEditAvatarClick={handleEditAvatarClick}
       handleEditProfileClick={handleEditProfileClick}

@@ -1,26 +1,22 @@
 export function Card (props) {
-  console.log(props)
-  //const data= props.data;
-  //return props.map((item)=>{
-    function handleClick() {
-      props.onCardClick(props.card);
-    }
-
 
     return(
     <>
-      <div class="element" key={props._id}>
-        <img class="element__image" onClick={handleClick} src={props.link} alt={props.name} />
-        <button id="erase-btn" class="element__erase"></button>
-        <div class="element__group">
-          <h3 class="element__location">{props.name}</h3>
-          <div class="element__like-area">
-            <button class="element__like"></button>
-            <span class="element__counter">{props.likes.length}</span>
+      { props.map((item, index)=>(
+        <div className="element" key={index}>
+          <img className="element__image" onClick={()=>props.__proto__.handleClick(item)} src={item.link} alt={item.name} />
+          <button id="erase-btn" className="element__erase"></button>
+          <div className="element__group">
+            <h3 className="element__location">{item.name}</h3>
+            <div className="element__like-area">
+              <button className="element__like"></button>
+              <span className="element__counter">{item.likes.length}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </>)
-  //}
-  //)
+     )) }
+    </>
+    )
+
+
 }

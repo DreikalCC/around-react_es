@@ -5,100 +5,31 @@ import { ImagePopup } from './ImagePopup';
 import { api } from '../utils/api';
 import { render } from '@testing-library/react';
 import { Card } from './Card';
-import { PopupWithImage } from './PopupWithImage';
 
 export function Main(props) {
-  //constructor(props) {
-    //super(props);
-    /*this.state = {
-      friends: [],
-      name: '',
-      id: '',
-      notes: ''
-    };*/
-    //this.create = this.create.bind(this);
-    //this.update = this.update.bind(this);
-    //this.delete = this.delete.bind(this);
-    //this.handleChange = this.handleChange.bind(this);
-  //}
 
   const [cards, setCards] = React.useState([])
   const [userName, setUserName] = React.useState('jack');
   const [userDesc, setUserDesc] = React.useState('custo');
   const [userAvatar, setUserAvatar] = React.useState();
 
-  const componenDidMount=()=>{
+  React.useEffect(()=>{
     Promise.all([api.getUserInfo(),api.getInitialCards()])
-    .then(([{name,about,_id,avatar},serverCards])=>{//console.log(serverCards)
+    .then(([{name,about,avatar},serverCards])=>{
     setUserName(name);
     setUserAvatar(avatar);
     setUserDesc(about);
     setCards(serverCards)
     })
+    .then(()=>{console.log(props)
+      cards.__proto__.handleClick = props.handleCardClick;
+    })
     .catch((err)=>{console.log(err)})
-  }
 
-  function deleteCard(){
-    //confirmErase.loading('loading');
-    api.deleteCard()
-    .then(()=>{})
-    .catch((err)=>{console.log(err)})
-    .finally(()=>{
-    //confirmErase.loading();
-  })
-  };
+    return () => {};
 
-  function likeCard(){
-    api.postLikes()
-    .then((res)=>{})
-  .catch((err)=>{console.log(err)})
-  };
+  },[])
 
-  function dislikeCard(){
-    api.deleteLikes()
-    .then((res)=>{})
-  .catch((err)=>{console.log(err)})
-  };
-
-  function addCard(){
-    //addCardForm.loading('loading');
-    api.postCard()
-    .then((res)=>{})
-    .catch((err)=>{console.log(err)})
-    .finally(()=>{
-    //formValidators['gallery'].resetValidation();
-    //addCardForm.loading();
-  }
-  )
-  };
-
-  function editData(){
-    //profileFormEdit.loading('loading');
-    api.postUserInfo()
-    .then(()=>{})
-    .catch((err)=>{console.log(err)})
-    .finally(()=>{
-    //formValidators['edit'].resetValidation();
-    //profileFormEdit.loading();
-  })
-  };
-
-  function editAvatar(){
-    //avatarFormEdit.loading('loading');
-    api.postUserAvatar()
-    .then(()=>{})
-    .catch((err)=>{console.log(err)})
-    .finally(()=>{
-    //formValidators['avatar'].resetValidation();
-    //avatarFormEdit.loading();
-  })
-  };
-
-
-//componenDidMount();
-
-//console.log(userName);
-//render(){
   return (
     <>
       <section className="profile">
@@ -116,21 +47,13 @@ export function Main(props) {
 
       <section className="elements">
 
-
         {
-          cards.map((item)=>{console.log(item);
-            return (
-              item.onCardClick={props.handleCardClick};
-              Card(item)
-            );
-          })
+          Card(cards)
         }
-
-
 
       </section>
 
-      <PopupWithImage onClose={props.handleClose} />
+      <ImagePopup image={props.selectedCard} isPopupOpen={props.isOpen.image} onClose={props.handleClose} />
 
       <PopupWithForm name="profile" title="Editar perfil" button="Guardar"
       holderAbout="Explorador" holderName="Jaques Cousteau" type="text"
@@ -145,7 +68,7 @@ export function Main(props) {
       isPopupOpen={props.isOpen.avatar} onClose={props.handleClose} />
 
       <section id="eraser" className="popup edit">
-        <form novalidate name="eraser" className="edit__form">
+        <form noValidate name="eraser" className="edit__form">
           <h3 className="edit__title">¿Estás seguro?</h3>
           <button type="submit" id="erase-submit" className="edit__submit-btn">Si</button>
           <a id="eraser__close" className="popup__close"></a>
@@ -154,5 +77,4 @@ export function Main(props) {
       </section>
     </>
   )
-//}
 }
