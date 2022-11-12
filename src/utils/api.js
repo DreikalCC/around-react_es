@@ -1,4 +1,4 @@
-export default class Api {
+export class Api {
   constructor({ address, groupId, headers }) {
     this.address = address;
     this.groupId = groupId;
