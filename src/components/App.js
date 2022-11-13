@@ -5,7 +5,7 @@ import { Main } from './Main';
 import { ImagePopup } from './ImagePopup';
 import { PopupWithForm } from './PopupWithForm';
 
-export function App() {
+export default function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
