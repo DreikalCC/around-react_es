@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { PopupWithForm } from './PopupWithForm';
 
 export function DeleteCardPopup(props) {
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(props.card);
     props.onConfirm(props.card);
   }
   return (

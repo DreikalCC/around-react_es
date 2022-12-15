@@ -25,22 +25,13 @@ export default function App() {
   });
   const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState('');
-  const [cardId, setCardId] = React.useState('');
+  const [deletableCard, setDeletableCard] = React.useState('');
 
   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((serverCards) => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+
+      .then(([user, serverCards]) => {
+        setCurrentUser(user);
         setCards(serverCards);
       })
       .catch((err) => {
@@ -58,7 +49,6 @@ export default function App() {
   }
 
   function handleCardDelete(card) {
-    console.log(card);
     api
       .deleteCard(card._id)
       .then(
@@ -84,10 +74,8 @@ export default function App() {
     setIsAddPlacePopupOpen(true);
   }
   function handleEraseCardClick(item) {
-    console.log(item);
-    setCardId(item);
+    setDeletableCard(item);
     setEraseCardPopupOpen(true);
-    console.log(cardId);
   }
 
   function closeAllPopups() {
@@ -164,7 +152,7 @@ export default function App() {
           isOpen={isEraseCardPopupOpen}
           onClose={closeAllPopups}
           onDeleteCard={handleCardDelete}
-          card={cardId}
+          card={deletableCard}
           onConfirm={handleCardDelete}
         />
 

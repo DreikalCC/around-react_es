@@ -9,7 +9,6 @@ export function Card(props) {
     props.onCardLike(props.data);
   }
   function handleDeleteClick() {
-    console.log(props.data);
     props.onEraseClick(props.data);
   }
   const currentUserContext = useContext(CurrentUserContext);
