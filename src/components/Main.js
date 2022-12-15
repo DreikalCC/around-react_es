@@ -1,32 +1,9 @@
 import React, { useContext } from 'react';
-import { api } from '../utils/api';
 import { Card } from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export function Main(props) {
-  const [cards, setCards] = React.useState([]);
   const currentUserContext = useContext(CurrentUserContext);
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((serverCards) => {
-        setCards(serverCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUserContext._id);
-    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-      setCards((state) => {
-        return state.map((c) => (c._id === card._id ? newCard : c));
-      });
-    });
-  }
-
   return (
     <>
       <section className="profile">
@@ -59,14 +36,14 @@ export function Main(props) {
       </section>
 
       <section className="elements">
-        {cards.map((card) => {
+        {props.cards.map((card) => {
           return (
             <Card
               key={card._id}
               data={card}
               onCardClick={props.handleCardClick}
               onEraseClick={props.handleEraseCardClick}
-              onCardLike={handleCardLike}
+              onCardLike={props.onCardLike}
             />
           );
         })}

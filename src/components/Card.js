@@ -6,10 +6,12 @@ export function Card(props) {
     props.onCardClick(props.data);
   }
   function handleLikeClick() {
-    console.log(props.data);
     props.onCardLike(props.data);
   }
-
+  function handleDeleteClick() {
+    console.log(props.data);
+    props.onEraseClick(props.data);
+  }
   const currentUserContext = useContext(CurrentUserContext);
 
   const isOwn = props.data.owner._id === currentUserContext._id;
@@ -25,30 +27,28 @@ export function Card(props) {
   }`;
 
   return (
-    <>
-      <div className="element">
-        <img
-          className="element__image"
-          onClick={handleClick}
-          src={props.data.link}
-          alt={props.data.name}
-        />
-        <button
-          id="erase-btn"
-          className={cardDeleteButtonClassName}
-          onClick={props.onEraseClick}
-        ></button>
-        <div className="element__group">
-          <h3 className="element__location">{props.data.name}</h3>
-          <div className="element__like-area">
-            <button
-              className={cardLikeButtonClassName}
-              onClick={handleLikeClick}
-            ></button>
-            <span className="element__counter">{props.data.likes.length}</span>
-          </div>
+    <div className="element">
+      <img
+        className="element__image"
+        onClick={handleClick}
+        src={props.data.link}
+        alt={props.data.name}
+      />
+      <button
+        id="erase-btn"
+        className={cardDeleteButtonClassName}
+        onClick={handleDeleteClick}
+      ></button>
+      <div className="element__group">
+        <h3 className="element__location">{props.data.name}</h3>
+        <div className="element__like-area">
+          <button
+            className={cardLikeButtonClassName}
+            onClick={handleLikeClick}
+          ></button>
+          <span className="element__counter">{props.data.likes.length}</span>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -52,7 +52,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  postCard({ name, link }) {
+  postCard(name, link) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: this.headers,
@@ -64,8 +64,6 @@ class Api {
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    console.log(cardId);
-    console.log(isLiked);
     if (isLiked) {
       return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
         method: 'DELETE',
@@ -81,7 +79,7 @@ class Api {
     }
   }
 
-  deleteCard({ cardId }) {
+  deleteCard(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this.headers,

@@ -1,6 +1,7 @@
 export function PopupWithForm({
   isPopupOpen,
   onClose,
+  onSubmit,
   name,
   title,
   buttonText,
@@ -11,7 +12,7 @@ export function PopupWithForm({
       id={name}
       className={isPopupOpen ? 'popup edit popup_active' : 'popup edit'}
     >
-      <form name={name} className="edit__form">
+      <form name={name} onSubmit={onSubmit} className="edit__form">
         <h3 className="edit__title">{title}</h3>
         <fieldset className="input">{children}</fieldset>
         <button type="submit" className="edit__submit-btn">
