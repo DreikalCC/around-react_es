@@ -3,8 +3,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { Main } from './Main';
 import { ImagePopup } from './ImagePopup';
-import { PopupWithForm } from './PopupWithForm';
-import { api } from '../utils/api';
+import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { EditProfilePopup } from './EditProfilePopup';
 import { EditAvatarPopup } from './EditAvatarPopup';
@@ -29,7 +28,6 @@ export default function App() {
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
-
       .then(([user, serverCards]) => {
         setCurrentUser(user);
         setCards(serverCards);
