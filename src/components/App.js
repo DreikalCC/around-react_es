@@ -25,6 +25,10 @@ export default function App() {
   const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState('');
   const [deletableCard, setDeletableCard] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [link, setLink] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -38,6 +42,7 @@ export default function App() {
   }, []);
 
   function handleCardLike(card) {
+    console.log(deletableCard);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
       setCards((state) => {
@@ -51,15 +56,15 @@ export default function App() {
       .deleteCard(card._id)
       .then(
         setCards((state) => {
-          const remainingCards = state.filter((c) => c._id != card._id);
+          const remainingCards = state.filter((c) => c._id !== card._id);
           return remainingCards.map((c) => c);
         })
       )
       .finally(closeAllPopups());
   }
 
-  function handleCardClick(item) {
-    setSelectedCard(item);
+  function handleCardClick(e) {
+    setSelectedCard({ name: e.target.alt, link: e.target.src });
     setIsImagePopupOpen(true);
   }
   function handleEditAvatarClick() {
@@ -71,8 +76,8 @@ export default function App() {
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
-  function handleEraseCardClick(item) {
-    setDeletableCard(item);
+  function handleEraseCardClick(card) {
+    setDeletableCard(card);
     setEraseCardPopupOpen(true);
   }
 
@@ -108,6 +113,19 @@ export default function App() {
       .then((newCard) => setCards([newCard, ...cards]))
       .finally(closeAllPopups());
   }
+  function handleLocationChange(e) {
+    setLocation(e.target.value);
+  }
+  function handleLinkChange(e) {
+    setLink(e.target.value);
+  }
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+
+  function handleDescriptionChange(e) {
+    setDescription(e.target.value);
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -132,12 +150,20 @@ export default function App() {
           onUpdateUser={handleUpdateUser}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          onNameChange={handleNameChange}
+          onDescriptionChange={handleDescriptionChange}
+          name={name}
+          description={description}
         />
 
         <AddPlacePopup
           onAddPlace={handleAddPlaceSubmit}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          onNameChange={handleLocationChange}
+          onLinkChange={handleLinkChange}
+          link={link}
+          location={location}
         />
 
         <EditAvatarPopup

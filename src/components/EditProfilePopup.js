@@ -2,22 +2,11 @@ import React from 'react';
 import { PopupWithForm } from './PopupWithForm';
 
 export function EditProfilePopup(props) {
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     props.onUpdateUser({
-      name,
-      about: description,
+      name: props.name,
+      about: props.description,
     });
   }
 
@@ -34,8 +23,7 @@ export function EditProfilePopup(props) {
         <input
           id="profile-name-input"
           name="name"
-          value={name}
-          onChange={handleNameChange}
+          onChange={props.onNameChange}
           required
           type="text"
           placeholder="Jaques Cousteau"
@@ -49,8 +37,7 @@ export function EditProfilePopup(props) {
         <input
           id="profile-desc-input"
           name="about"
-          value={description}
-          onChange={handleDescriptionChange}
+          onChange={props.onDescriptionChange}
           required
           type="text"
           placeholder="Explorador"

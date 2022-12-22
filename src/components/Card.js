@@ -2,15 +2,6 @@ import React, { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export function Card(props) {
-  function handleClick() {
-    props.onCardClick(props.data);
-  }
-  function handleLikeClick() {
-    props.onCardLike(props.data);
-  }
-  function handleDeleteClick() {
-    props.onEraseClick(props.data);
-  }
   const currentUserContext = useContext(CurrentUserContext);
 
   const isOwn = props.data.owner._id === currentUserContext._id;
@@ -29,21 +20,25 @@ export function Card(props) {
     <div className="element">
       <img
         className="element__image"
-        onClick={handleClick}
+        onClick={props.onCardClick}
         src={props.data.link}
         alt={props.data.name}
       />
       <button
         id="erase-btn"
         className={cardDeleteButtonClassName}
-        onClick={handleDeleteClick}
+        onClick={() => {
+          props.onEraseClick(props.data);
+        }}
       ></button>
       <div className="element__group">
         <h3 className="element__location">{props.data.name}</h3>
         <div className="element__like-area">
           <button
             className={cardLikeButtonClassName}
-            onClick={handleLikeClick}
+            onClick={() => {
+              props.onCardLike(props.data);
+            }}
           ></button>
           <span className="element__counter">{props.data.likes.length}</span>
         </div>

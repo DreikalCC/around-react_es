@@ -1,22 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { PopupWithForm } from './PopupWithForm';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export function AddPlacePopup(props) {
-  const [name, setName] = React.useState('');
-  const [link, setLink] = React.useState('');
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-  function handleLinkChange(e) {
-    setLink(e.target.value);
-  }
   function handleSubmit(e) {
     e.preventDefault();
     props.onAddPlace({
-      name,
-      link,
+      name: props.location,
+      link: props.link,
     });
   }
 
@@ -33,9 +23,8 @@ export function AddPlacePopup(props) {
         <input
           required
           id="card-name-input"
-          name="name"
-          value={name}
-          onChange={handleNameChange}
+          name="location"
+          onChange={props.onNameChange}
           type="text"
           placeholder="Título"
           className="input__form input__name input__name_gallery"
@@ -49,8 +38,7 @@ export function AddPlacePopup(props) {
           required
           id="card-url-input"
           name="link"
-          value={link}
-          onChange={handleLinkChange}
+          onChange={props.onLinkChange}
           type="url"
           placeholder="URL de la imagen"
           className="input__form input__description"

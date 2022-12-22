@@ -20,7 +20,9 @@ class Api {
       headers: {
         authorization: this.auth,
       },
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
   }
 
   getUserInfo() {
@@ -28,7 +30,9 @@ class Api {
       headers: {
         authorization: this.auth,
       },
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
   }
 
   postUserInfo(name, about) {
@@ -39,7 +43,9 @@ class Api {
         name: name,
         about: about,
       }),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
   }
 
   postUserAvatar(link) {
@@ -49,7 +55,9 @@ class Api {
       body: JSON.stringify({
         avatar: link,
       }),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
   }
 
   postCard(name, link) {
@@ -60,7 +68,9 @@ class Api {
         name,
         link,
       }),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
   }
 
   changeLikeCardStatus(cardId, isLiked) {
@@ -69,13 +79,17 @@ class Api {
         method: 'DELETE',
         headers: this.headers,
         body: JSON.stringify({}),
-      }).then(this._checkResponse);
+      })
+        .then(this._checkResponse)
+        .catch((err) => console.log(err));
     } else {
       return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
         method: 'PUT',
         headers: this.headers,
         body: JSON.stringify({}),
-      }).then(this._checkResponse);
+      })
+        .then(this._checkResponse)
+        .catch((err) => console.log(err));
     }
   }
 
@@ -84,7 +98,9 @@ class Api {
       method: 'DELETE',
       headers: this.headers,
       body: JSON.stringify({}),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
   }
 }
 

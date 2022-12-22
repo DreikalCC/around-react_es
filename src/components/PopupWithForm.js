@@ -18,7 +18,7 @@ export function PopupWithForm({
         <button type="submit" className="edit__submit-btn">
           {buttonText}
         </button>
-        <a id={name} onClick={onClose} className="popup__close"></a>
+        <button id={name} onClick={onClose} className="popup__close"></button>
       </form>
       <div id={`${name}__overlay`} className="popup__overlay"></div>
     </section>
